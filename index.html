@@ -3,25 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Community Resource Map</title>
+    <title>Find Community Resources at the Library</title>
     
-    <!-- Leaflet.js CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
-     
-    <!-- Leaflet.js JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+    <!-- Security Meta Tags -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#00A99D">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Resources">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    
+    <!-- Leaflet.js CSS (local) - SRI temporarily disabled for testing -->
+    <link rel="stylesheet" href="lib/leaflet.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="controls-panel">
+            <header class="panel-header">
+                <picture class="header-logo">
+                    <img src="assets/images/logo.png" 
+                         alt="Georges River Libraries Logo" 
+                         class="header-logo">
+                </picture>
+            </header>
+            <div class="panel-body">
+                <div class="page-title">
+                    <h1>
+                        <span data-translate-key="titleFind">Find </span>
+                        <span id="scrolling-category" class="highlight">community</span> 
+                        <span data-translate-key="titleResources" class="subtitle">resources</span><br>
+                        <span data-translate-key="titleAtTheLibrary" class="subtitle">at the library</span>
+                    </h1>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <h2 class="filter-heading" data-translate-key="headingSelectLanguage">Select your language:</h2>
+                        <div id="language-filters" class="button-grid">
+                            <button class="filter-button active single-line" data-filter="English">
+                                <span class="lang-main">English</span>
+                            </button>
+                            <button class="filter-button" data-filter="Mandarin">
+                                <span class="lang-native">普通话</span>
+                                <span class="lang-main">Mandarin</span>
+                            </button>
+                            <button class="filter-button" data-filter="Cantonese">
+                                <span class="lang-native">粤语</span>
+                                <span class="lang-main">Cantonese</span>
+                            </button>
+                            <button class="filter-button" data-filter="Nepali">
+                                <span class="lang-native">नेपाली</span>
+                                <span class="lang-main">Nepali</span>
+                            </button>
+                            <button class="filter-button" data-filter="Italian">
+                                <span class="lang-native">Italiano</span>
+                                <span class="lang-main">Italian</span>
+                            </button>
+                            <button class="filter-button" data-filter="Greek">
+                                <span class="lang-native">Ελληνικά</span>
+                                <span class="lang-main">Greek</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h2 class="filter-heading" data-translate-key="headingChooseCategory">Choose a Category:</h2>
+                        <div id="community-filters" class="button-grid">
+                            <button class="filter-button active single-line" data-filter="First Nations">
+                                <span class="lang-main" data-translate-key="catFirstNations">First Nations</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Arts">
+                                <span class="lang-main" data-translate-key="catArts">Arts</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Youth">
+                                <span class="lang-main" data-translate-key="catYouth">Youth</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Health & Wellbeing">
+                                <span class="lang-main" data-translate-key="catHealth">Health & Wellbeing</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Carers Support Services">
+                                <span class="lang-main" data-translate-key="catCarers">Carers Support Services</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Children & Families">
+                                <span class="lang-main" data-translate-key="catChildrenFamilies">Children & Families</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Community Support">
+                                <span class="lang-main" data-translate-key="catCommunitySupport">Community Support</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Disability Services">
+                                <span class="lang-main" data-translate-key="catDisability">Disability Services</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Domestic Violence">
+                                <span class="lang-main" data-translate-key="catDomesticViolence">Domestic Violence</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Food & Emergency Support">
+                                <span class="lang-main" data-translate-key="catFood">Food & Emergency Support</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Government Departments">
+                                <span class="lang-main" data-translate-key="catGovernment">Government Departments</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="LGBTQIA+">
+                                <span class="lang-main" data-translate-key="catLgbtqia">LGBTQIA+</span>
+                            </button>
+                            <button class="filter-button single-line" data-filter="Multicultural">
+                                <span class="lang-main" data-translate-key="catMulticultural">Multicultural</span>
+                            </button>
+                        </div>
+                        <div class="clear-filters-section">
+                            <button id="clear-all-filters" class="clear-filters-button" data-translate-key="clearAllFilters">
+                                Clear All Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <main class="main-panel">
+            <section class="map-container">
+                <div id="map"></div>
+            </section>
+            <section class="list-container">
+                <h2 id="list-header" data-translate-key="listHeader">Service Directory</h2>
+                <ul id="organisation-list"></ul>
+            </section>
+        </main>
+    </div>
 
-    <!-- QR Code Generator Library -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.js"></script>
+    <!-- Local Fonts - SRI temporarily disabled for testing -->
+    <link rel="stylesheet" href="lib/work-sans.css">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Security Implementation -->
+    <script src="security-implementation.js"></script>
+    
+    <!-- Local JavaScript libraries (SRI temporarily disabled for testing) -->
+    <script src="lib/leaflet.js"></script>
+    <script src="lib/qrcode.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => console.log('SW registered:', registration))
+                    .catch(error => console.log('SW registration failed:', error));
+            });
+        }
+    </script>
 
     <style>
         /* --- Brand Colors --- */
@@ -333,89 +468,6 @@
         }
         
     </style>
-</head>
-<body>
-
-    <div class="app-layout">
-        <div class="controls-panel">
-            <header class="panel-header">
-                <img src="https://georgesriver.spydus.com/api/maintenance/1.0/imagebrowser/image?blobName=a31cf63f-7e24-41d5-b1f8-c206bde45ce6.png" alt="Georges River Libraries Logo" class="header-logo">
-            </header>
-            <div class="panel-body">
-                <div class="page-title">
-                    <h1>
-                        <span data-translate-key="titleFind">Find </span><span id="scrolling-category" class="highlight"></span> <span data-translate-key="titleResources" class="subtitle">resources</span><br>
-                        <span data-translate-key="titleAtTheLibrary" class="subtitle">at the library</span>
-                    </h1>
-                </div>
-                
-                <div class="filter-section">
-                    <div class="filter-group">
-                        <div class="filter-heading" data-translate-key="headingSelectLanguage">Select your language:</div>
-                        <div id="language-filters" class="button-grid">
-                            <button class="filter-button active single-line" data-filter="English">
-                                <span class="lang-main">English</span>
-                            </button>
-                            <button class="filter-button" data-filter="Mandarin">
-                                <span class="lang-native">普通话</span>
-                                <span class="lang-main">Mandarin</span>
-                            </button>
-                            <button class="filter-button" data-filter="Cantonese">
-                                <span class="lang-native">粤语</span>
-                                <span class="lang-main">Cantonese</span>
-                            </button>
-                            <button class="filter-button" data-filter="Nepali">
-                                <span class="lang-native">नेपाली</span>
-                                <span class="lang-main">Nepali</span>
-                            </button>
-                            <button class="filter-button" data-filter="Italian">
-                                <span class="lang-native">Italiano</span>
-                                <span class="lang-main">Italian</span>
-                            </button>
-                            <button class="filter-button" data-filter="Greek">
-                                <span class="lang-native">Ελληνικά</span>
-                                <span class="lang-main">Greek</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="filter-group">
-                        <div class="filter-heading" data-translate-key="headingChooseCategory">Choose a Category:</div>
-                        <div id="community-filters" class="button-grid">
-                            <button class="filter-button active single-line" data-filter="First Nations"><span class="lang-main" data-translate-key="catFirstNations">First Nations</span></button>
-                            <button class="filter-button single-line" data-filter="Arts"><span class="lang-main" data-translate-key="catArts">Arts</span></button>
-                            <button class="filter-button single-line" data-filter="Carers Support Services"><span class="lang-main" data-translate-key="catCarers">Carers Support Services</span></button>
-                            <button class="filter-button single-line" data-filter="Children & Families"><span class="lang-main" data-translate-key="catChildrenFamilies">Children & Families</span></button>
-                            <button class="filter-button single-line" data-filter="Community Support"><span class="lang-main" data-translate-key="catCommunitySupport">Community Support</span></button>
-                            <button class="filter-button single-line" data-filter="Disability Services"><span class="lang-main" data-translate-key="catDisability">Disability Services</span></button>
-                            <button class="filter-button single-line" data-filter="Domestic Violence"><span class="lang-main" data-translate-key="catDomesticViolence">Domestic Violence</span></button>
-                            <button class="filter-button single-line" data-filter="Drug & Alcohol"><span class="lang-main" data-translate-key="catDrugAlcohol">Drug & Alcohol</span></button>
-                            <button class="filter-button single-line" data-filter="Education, Training & Employment"><span class="lang-main" data-translate-key="catEducation">Education, Training & Employment</span></button>
-                            <button class="filter-button single-line" data-filter="Food & Emergency Support"><span class="lang-main" data-translate-key="catFood">Food & Emergency Support</span></button>
-                            <button class="filter-button single-line" data-filter="Government Departments"><span class="lang-main" data-translate-key="catGovernment">Government Departments</span></button>
-                            <button class="filter-button single-line" data-filter="Health & Wellbeing"><span class="lang-main" data-translate-key="catHealth">Health & Wellbeing</span></button>
-                            <button class="filter-button single-line" data-filter="Housing & Homelessness"><span class="lang-main" data-translate-key="catHousing">Housing & Homelessness</span></button>
-                            <button class="filter-button single-line" data-filter="Legal Support"><span class="lang-main" data-translate-key="catLegal">Legal Support</span></button>
-                            <button class="filter-button single-line" data-filter="LGBTQIA+"><span class="lang-main" data-translate-key="catLgbtqia">LGBTQIA+</span></button>
-                            <button class="filter-button single-line" data-filter="Multicultural"><span class="lang-main" data-translate-key="catMulticultural">Multicultural</span></button>
-                            <button class="filter-button single-line" data-filter="Police & Emergency Services"><span class="lang-main" data-translate-key="catPolice">Police & Emergency Services</span></button>
-                            <button class="filter-button single-line" data-filter="Seniors"><span class="lang-main" data-translate-key="catSeniors">Seniors</span></button>
-                            <button class="filter-button single-line" data-filter="Transport"><span class="lang-main" data-translate-key="catTransport">Transport</span></button>
-                            <button class="filter-button single-line" data-filter="Youth"><span class="lang-main" data-translate-key="catYouth">Youth</span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="main-panel">
-            <div class="map-container">
-                <div id="map"></div>
-            </div>
-            <div class="list-container">
-                <h2 id="list-header" data-translate-key="listHeader">Service Directory</h2>
-                <ul id="organisation-list"></ul>
-            </div>
-        </div>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -537,18 +589,7 @@
             }
         }
         
-        // --- HELPER FUNCTION TO GENERATE QR CODE ---
-        function generateQrCode(url) {
-            try {
-                const qr = qrcode(0, 'L');
-                qr.addData(url);
-                qr.make();
-                return qr.createImgTag(4, 8); // cell size, margin
-            } catch (e) {
-                console.error('QR Code generation failed:', e);
-                return '<span>QR code error.</span>';
-            }
-        }
+        // QR code generation is now handled by script.js
         
         // --- TRANSLATION LOGIC ---
         function storeOriginalTexts() {
@@ -603,9 +644,16 @@
                         <p><strong>${currentTranslations.labelPhone}</strong> ${partner.phone}</p>
                         ${emailHTML}
                     </div>
-                    <div class="item-qr-code">${generateQrCode(partner.website)}</div>
+                    <div class="item-qr-code" id="qr-${index}"></div>
                 `;
                 organisationList.appendChild(listItem);
+                
+                // Generate QR code after adding to DOM
+                const qrContainer = document.getElementById(`qr-${index}`);
+                if (qrContainer && typeof generateQrCode === 'function') {
+                    const qrElement = generateQrCode(partner.website);
+                    qrContainer.appendChild(qrElement);
+                }
 
                 // Add marker to the map only if lat/lng are available
                 if (partner.lat && partner.lng) {
@@ -627,8 +675,12 @@
                     // Generate QR code when the popup is opened
                     marker.on('popupopen', () => {
                         const qrContainer = document.getElementById(popupQrCodeId);
-                        if(qrContainer) {
-                            qrContainer.innerHTML = generateQrCode(partner.website);
+                        if (qrContainer && typeof generateQrCode === 'function') {
+                            // Clear existing content
+                            qrContainer.innerHTML = '';
+                            // Add new QR code
+                            const qrElement = generateQrCode(partner.website);
+                            qrContainer.appendChild(qrElement);
                         }
                     });
                 }
