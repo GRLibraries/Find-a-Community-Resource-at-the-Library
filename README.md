@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Community Resources Finder
 
 A multilingual Progressive Web Application (PWA) that helps users discover community resources and services at Georges River Libraries. Built with vanilla JavaScript, this accessible web app supports 6 languages and provides an interactive map interface for finding local organizations and services.
