@@ -1,6 +1,6 @@
-# Interactive Community Resource Map
+# Find a Community Resource at the Library
 
-An accessible, multilingual web application designed to help users find local community services. This tool features a dynamic map and a filterable list directory, making it easy to locate support organisations based on language and service category.
+[Find a Community Resource at the Library](https://cwrigh13.github.io/Find-a-Community-Resource-at-the-Library/ "Find a Community Resource at the Library") is an accessible, multilingual web application designed to help Georges River Libraries customers find local community services. This tool features a dynamic map and a filterable list directory, making it easy to locate support organisations based on language and service category.
 
 ## **Features**
 
