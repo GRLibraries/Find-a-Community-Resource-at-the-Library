@@ -39,11 +39,3 @@
 **Leaflet.js:** An open-source JavaScript library for interactive maps.
 
 **qrcode.js:** A library for generating QR codes directly in the browser.
-
-## **How to Use**
-
-**1. Select a Language:** Click on a language button at the top of the control panel. The interface and service descriptions will instantly translate.
-
-**2. Choose a Category:** Click on a category button to filter the results.
-
-**3. Explore the Map:** The map will update to show pins for all organisations that match
